@@ -1,10 +1,9 @@
-.venv/
-__pycache__/
-.DS_Store
-.ipynb_checkpoints/
-*.pyc
-
-# Ignore massive raw datasets (LFS limit)
-data/sba_loans/SBAnational.csv
-data/college_scorecard/College_Scorecard_Raw_Data_06032026/
-data/college_scorecard/Crosswalks.zip
+archive/
+.pi/tasks
+.venv
+data/__MACOSX/
+data/conv_to_md
+data/research
+data/college_scorecard/
+docs/literature/dale_krueger_2011_selectivity_earnings.md
+docs/literature/pepinsky_2018_listwise_deletion.md
