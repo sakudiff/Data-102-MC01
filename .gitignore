@@ -8,3 +8,5 @@ __pycache__/
 data/sba_loans/SBAnational.csv
 data/college_scorecard/College_Scorecard_Raw_Data_06032026/
 data/college_scorecard/Crosswalks.zip
+data/archive/
+scratch/
