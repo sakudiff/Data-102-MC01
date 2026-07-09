@@ -30,7 +30,7 @@
 | 6. Data Modelling | Not started | |
 | 6a. Model 1: Baseline Linear Regression | Not started | Aaron |
 | 6b. Model 2: Sector Interaction Model | Not started | Leonna |
-| 6c. Model 3: Extended Model with Covariates | Not started | Mikaella |
+| 6c. Model 3: To be decided — additional modelling approach | Not started | Mikaella |
 | 7a. Insights (narrative + code) | Not started | Gheann |
 | 7b. Conclusions (narrative + code) | Not started | Precious |
 
