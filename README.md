@@ -11,6 +11,33 @@
 - MARTINEZ MIKAELLA KAYE ANG
 - SISON AARON JOSHUA ESTACIO
 
+## Project Roadmap
+
+### Phase 1 — Complete
+
+| Section | Status | Assigned To |
+|---|---|---|
+| 1. Dataset Description | Done | Aaron, Mikaella, Leonna |
+| 2. Data Cleaning | Done | Aaron, Mikaella, Leonna |
+| 3. Exploratory Data Analysis | Done | Precious, Gheann |
+| 4. Research Question | Done | Mikaella |
+| 5. Statistical Inference | Done | Aaron |
+
+### Phase 2 — To Do
+
+| Section | Status | Assigned To |
+|---|---|---|
+| 6. Data Modelling | Not started | Aaron, Leonna, Mikaella |
+| 7a. Insights | Not started | Gheann |
+| 7b. Conclusions | Not started | Precious |
+
+### Other Deliverables
+
+| Item | Status | Assigned To |
+|---|---|---|
+| Presentation slides | Phase 1 done, Phase 2 pending | All members |
+| Final zip packaging | Pending Phase 2 | Aaron |
+
 ## Deliverables
 The final compiled submission file for AnimoSpace is:
 `DATA102-Project-S30B-Group1.zip`
