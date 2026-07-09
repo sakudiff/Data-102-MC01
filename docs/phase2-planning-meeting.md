@@ -41,7 +41,9 @@ Statistical inference confirmed a significant Spearman correlation between tuiti
 
 | Section | Status | Owner |
 |---------------------------------------|-----------------|-----------------|
-| 6\. Data Modelling (3 models) | Scaffold ready | Aaron, Leonna, Mikaella |
+| 6a. Model 1: Baseline Linear Regression | Scaffold ready | Leonna |
+| 6b. Model 2: Sector Interaction Model | Scaffold ready | Mikaella |
+| 6c. Model 3: To be decided | Scaffold ready | Aaron |
 | 7a. Insights | Scaffold ready | Gheann |
 | 7b. Conclusions | Scaffold ready | Precious |
 | Presentation slides (Phase 2 update) | Pending | All members |
@@ -57,15 +59,17 @@ The research question has three layers. Each model targets one layer.
 
 | Model | Answers This Part of the Question | Why It's Needed |
 |---|---|---|
-| **Model 1: Baseline Regression** | *Do colleges that charge higher tuition produce higher post-graduation earnings?* | Establishes whether a significant relationship exists at all. Without this, the rest of the analysis has no foundation |
-| **Model 2: Sector Interaction** | *Does this relationship differ across public, private nonprofit, and for-profit institutions?* | Tests whether the tuition-earnings slope is uniform or varies by sector. The interaction term is the statistical test for this |
-| **Model 3: To Be Decided** | *Does the relationship hold after controlling for other factors?* | Acts as a robustness check. If the tuition coefficient survives after adding controls, the conclusion is stronger. If it collapses, the original relationship may be driven by confounding variables |
+| Model | Answers This Part of the Question | Assigned To |
+|---|---|---|
+| **Model 1: Baseline Regression** | *Do colleges that charge higher tuition produce higher post-graduation earnings?* | Leonna |
+| **Model 2: Sector Interaction** | *Does this relationship differ across public, private nonprofit, and for-profit institutions?* | Mikaella |
+| **Model 3: To Be Decided** | *Does the relationship hold after controlling for other factors?* | Aaron |
 
 Together, the three models form a complete answer: existence of a relationship, variation across sectors, and robustness to additional controls.
 
-### 1. Decide Model 3 Approach
+### 1. Decide Model 3 Approach (Aaron)
 
-Model 1 and Model 2 are regression-based and directly test the research question. Model 3 is open for the group to choose. Some options:
+Model 1 and Model 2 are regression-based and directly test the research question. Model 3 is open for the group to choose. Aaron will decide on the approach. Some options:
 
 | Approach | What It Does | Why It Fits |
 |------------------------|------------------------|------------------------|
@@ -76,14 +80,14 @@ Model 1 and Model 2 are regression-based and directly test the research question
 
 Discuss which technique your instructor covered in class and which fits best. Update the notebook header and code scaffold once decided.
 
-### 2. Confirm Model 1 (Baseline Linear Regression)
+### 2. Confirm Model 1 — Leonna (Baseline Linear Regression)
 
 -   Log-transform `TUITIONFEE_IN` and `MD_EARN_WNE_P10` (both right-skewed)
 -   Fit simple OLS regression: `log_earnings ~ log_tuition`
 -   Report: R-squared, coefficient, p-value, RMSE
 -   Diagnostics: residuals-vs-fitted plot, Q-Q plot
 
-### 3. Confirm Model 2 (Sector Interaction Model)
+### 3. Confirm Model 2 — Mikaella (Sector Interaction Model)
 
 -   One-hot encode `CONTROL` (Public, Private Nonprofit, For-Profit)
 -   Fit regression with interaction: `log_earnings ~ log_tuition * sector`
