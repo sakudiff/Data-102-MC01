@@ -8,19 +8,21 @@ A subset of the US Department of Education College Scorecard containing 6,273 in
 
 ### Data Handling and Cleaning
 
-The dataset went through a structured cleaning pipeline before analysis. Here is what was done and why.
+The dataset went through a structured cleaning pipeline before analysis. Here is a summary of each step, the numbers affected, and the reasoning behind each decision.
 
-**Starting point:** 6,273 institutions across 24 variables from the College Scorecard. The data is collected through federal Title IV reporting requirements, with earnings drawn from de-identified Treasury tax records.
+| Step | What Happened | Rows Affected | Why |
+|---|---|---|---|
+| Raw data | 6,273 institutions, 24 variables | — | College Scorecard subset via federal Title IV reporting. Earnings from de-identified Treasury tax records |
+| PrivacySuppressed coercion | "PS" values in `GRAD_DEBT_MDN` converted to NaN | 1,228 values flagged | Small cohort sizes trigger privacy suppression. Coercing to NaN prevents misinterpreting "PS" as a valid entry |
+| Drop missing tuition or earnings | Listwise deletion on `TUITIONFEE_IN` and `MD_EARN_WNE_P10` | 2,915 rows removed | Research question requires both values. Missing these makes an institution unusable for analysis |
+| Drop missing debt | Listwise deletion on `GRAD_DEBT_MDN` | 296 rows removed | Debt is a secondary variable of interest. Dropping preserves complete cases for multi-variable models |
+| Group-wise median imputation | Missing `UGDS` filled with per-sector median enrollment | 257 values imputed | Preserves sample size without distorting each sector's central tendency. Robust for a non-primary covariate |
+| Drop zero tuition | Removed institutions reporting $0 in-state tuition | 1 row removed | Zero tuition institutions (e.g., military academies) distort the investment-return framing of the study |
+| IQR outlier removal (earnings) | Symmetric global IQR trim on `MD_EARN_WNE_P10` | 167 extreme values removed total | Prevents a small number of extreme observations from driving correlation results |
+| IQR outlier removal (tuition) | Per-sector IQR trim on `TUITIONFEE_IN` | Included in the 167 above | Tuition distributions differ dramatically by sector. A global trim would unfairly cut public institutions |
+| **Final cleaned dataset** | **2,894 institutions, complete on all five key variables** | — | Ready for descriptive statistics, EDA, and modelling |
 
-**Missing data handling.** Three variables had significant missingness. In-state tuition was missing for 2,661 institutions (42.4%) and median earnings for 1,146 (18.3%). These were handled through listwise deletion: any institution missing either tuition or earnings was removed (2,915 rows dropped). This was necessary because the research question requires both values. The trade-off is that the final sample may underrepresent institutions that are less transparent in their reporting.
-
-Median graduate debt had a different problem. The raw data used "PrivacySuppressed" ("PS") instead of actual values for 1,228 institutions, likely because small cohort sizes make disclosure a privacy concern. These were coerced to NaN and then dropped (296 additional rows). This is Missing Not At Random (MNAR) and introduces bias toward larger, more transparent institutions, which we acknowledge as a limitation.
-
-**Imputation.** Undergraduate enrollment was missing for 257 institutions. Instead of dropping them, we used group-wise median imputation conditional on sector (Public, Private Nonprofit, For-Profit). This preserved the sample size without distorting each sector's central tendency. A more sophisticated method would be ideal, but median imputation is robust for a control variable that is not our primary outcome.
-
-**Outlier removal.** Tuition outliers were trimmed using per-sector IQR (interquartile range), because tuition distributions differ dramatically by control type. Earnings outliers were trimmed symmetrically using global IQR. A total of 167 extreme values were removed without distorting the underlying distributions.
-
-**Final cleaned dataset:** 2,894 institutions with complete data on all five key variables (tuition, earnings, debt, sector, enrollment).
+**Key limitation to keep in mind.** The PrivacySuppressed issue in graduate debt is Missing Not At Random (MNAR). Institutions with small cohorts are more likely to suppress debt data, which means our final sample skews toward larger, more transparent institutions. Any conclusions about debt should carry this caveat.
 
 ### Research Question
 
@@ -38,19 +40,19 @@ Statistical inference confirmed a significant Spearman correlation between tuiti
 
 ### Phase 2 Sections
 
-| Section                                 | Status          | Owner       |
-|-----------------------------------------|-----------------|-------------|
-| 6. Data Modelling (3 models)           | Scaffold ready  | Aaron, Leonna, Mikaella |
-| 7a. Insights                            | Scaffold ready  | Gheann      |
-| 7b. Conclusions                         | Scaffold ready  | Precious    |
-| Presentation slides (Phase 2 update)    | Pending         | All members |
-| Final zip packaging                     | Pending Phase 2 | Aaron       |
+| Section | Status | Owner |
+|---------------------------------------|-----------------|-----------------|
+| 6\. Data Modelling (3 models) | Scaffold ready | Aaron, Leonna, Mikaella |
+| 7a. Insights | Scaffold ready | Gheann |
+| 7b. Conclusions | Scaffold ready | Precious |
+| Presentation slides (Phase 2 update) | Pending | All members |
+| Final zip packaging | Pending Phase 2 | Aaron |
 
 ------------------------------------------------------------------------
 
 ## Meeting Agenda: Finalize Phase 2 Plan
 
-### 1. Decide Model 3 Approach (Mikaella leads, all decide)
+### 1. Decide Model 3 Approach 
 
 Model 1 and Model 2 are regression-based and directly test the research question. Model 3 is open for the group to choose. Some options:
 
@@ -100,17 +102,4 @@ Discuss which technique your instructor covered in class and which fits best. Up
 
 ------------------------------------------------------------------------
 
-## Pre-Work Before the Meeting
-
-Everyone should have the repo cloned and the notebook open. The code scaffolds are on the `chore/roadmap-readme` branch (PR #1). The three data modelling code cells and the insights and conclusions code cells each have a TODO describing what to implement. The group will assign who implements which model during the meeting.
-
-``` bash
-git clone https://github.com/sakudiff/Data-102-MC01.git
-cd Data-102-MC01
-git fetch origin
-git switch chore/roadmap-readme
-```
-
 ## Notes
-
-Use this document during the meeting to record decisions made, especially for Model 3. Update the notebook scaffolds immediately after decisions are finalized.
