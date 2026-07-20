@@ -11,13 +11,13 @@ A subset of the US Department of Education College Scorecard containing 6,273 in
 The dataset went through a structured cleaning pipeline before analysis. Here is a summary of each step, the numbers affected, and the reasoning.
 
 | Step | What Happened | Rows Affected | Why |
-|---|---|---|---|
+|------------------|------------------|------------------|------------------|
 | Raw data | 6,273 institutions, 24 variables | — | College Scorecard subset via federal Title IV reporting. Earnings from de-identified Treasury tax records |
 | PrivacySuppressed coercion | "PS" values in `GRAD_DEBT_MDN` converted to NaN | 1,228 values flagged | Small cohort sizes trigger privacy suppression. Coercing to NaN prevents misreading "PS" as a valid entry |
 | Drop missing tuition or earnings | Listwise deletion on `TUITIONFEE_IN` and `MD_EARN_WNE_P10` | 2,915 rows removed | Research question requires both values. Missing these makes an institution unusable |
 | Drop missing debt | Listwise deletion on `GRAD_DEBT_MDN` | 296 rows removed | Debt is a secondary variable. Dropping preserves complete cases for multi-variable models |
 | Group-wise median imputation | Missing `UGDS` filled with per-sector median | 257 values imputed | Preserves sample size without distorting each sector's central tendency |
-| Drop zero tuition | Removed institutions reporting $0 in-state tuition | 1 row removed | Zero tuition institutions distort the investment-return framing of the study |
+| Drop zero tuition | Removed institutions reporting \$0 in-state tuition | 1 row removed | Zero tuition institutions distort the investment-return framing of the study |
 | IQR outlier removal | Symmetric global IQR on earnings, per-sector IQR on tuition | 167 extreme values removed total | Prevents extreme observations from driving results. Per-sector trim respects different tuition distributions |
 | **Final cleaned dataset** | **2,894 institutions, complete on all five key variables** | — | Ready for descriptive statistics, EDA, and modelling |
 
@@ -39,15 +39,15 @@ Statistical inference confirmed a significant Spearman correlation between tuiti
 
 ### Phase 2 Sections
 
-| Section | Status | Owner |
-|---------------------------------------|-----------------|-----------------|
-| 6a. Model 1: Baseline Linear Regression | Scaffold ready | Leonna |
-| 6b. Model 2: Sector Interaction Model | Scaffold ready | Mikaella |
-| 6c. Model 3: To be decided | Scaffold ready | Aaron |
-| 7a. Insights | Scaffold ready | Gheann |
-| 7b. Conclusions | Scaffold ready | Precious |
-| Presentation slides (Phase 2 update) | Pending | All members |
-| Final zip packaging | Pending Phase 2 | Aaron |
+| Section                                 | Status          | Owner       |
+|-----------------------------------------|-----------------|-------------|
+| 6a. Model 1: Baseline Linear Regression | Scaffold ready  | Leonna      |
+| 6b. Model 2: Sector Interaction Model   | Scaffold ready  | Mikaella    |
+| 6c. Model 3: To be decided              | Scaffold ready  | Aaron       |
+| 7a. Insights                            | Scaffold ready  | Gheann      |
+| 7b. Conclusions                         | Scaffold ready  | Precious    |
+| Presentation slides (Phase 2 update)    | Pending         | All members |
+| Final zip packaging                     | Pending Phase 2 | Aaron       |
 
 ------------------------------------------------------------------------
 
@@ -58,9 +58,9 @@ Statistical inference confirmed a significant Spearman correlation between tuiti
 The research question has three layers. Each model targets one layer.
 
 | Model | Answers This Part of the Question | Why It's Needed |
-|---|---|---|
+|------------------------|------------------------|------------------------|
 | Model | Answers This Part of the Question | Assigned To |
-|---|---|---|
+| --- | --- | --- |
 | **Model 1: Baseline Regression** | *Do colleges that charge higher tuition produce higher post-graduation earnings?* | Leonna |
 | **Model 2: Sector Interaction** | *Does this relationship differ across public, private nonprofit, and for-profit institutions?* | Mikaella |
 | **Model 3: To Be Decided** | *Does the relationship hold after controlling for other factors?* | Aaron |
@@ -97,17 +97,9 @@ Discuss which technique your instructor covered in class and which fits best. Up
 
 ### 4. Clarify Insights and Conclusions
 
-**Insights (Gheann)** should synthesize:
-- What each model tells us (direction, magnitude, significance)
-- How sector changes the story
-- Whether adding controls changed the results
-- Any surprising or non-obvious findings
+**Insights (Gheann)** should synthesize: - What each model tells us (direction, magnitude, significance) - How sector changes the story - Whether adding controls changed the results - Any surprising or non-obvious findings
 
-**Conclusions (Precious)** should state:
-- The direct answer to the research question
-- Practical implications for students and policymakers
-- Limitations of the analysis
-- Suggested future directions
+**Conclusions (Precious)** should state: - The direct answer to the research question - Practical implications for students and policymakers - Limitations of the analysis - Suggested future directions
 
 ### 5. Slides and Submission
 

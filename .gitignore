@@ -12,3 +12,6 @@ data/archive/
 scratch/
 .pi 
 .pi/tasks
+.DS_Store
+deployment/.netlify/.DS_Store
+deployment/.netlify/plugins/node_modules/.DS_Store
