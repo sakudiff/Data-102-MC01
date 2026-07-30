@@ -25,7 +25,7 @@ The dataset went through a structured cleaning pipeline before analysis. Here is
 
 ### Research Question
 
-*After controlling for institutional selectivity, do colleges that charge higher tuition produce higher post-graduation earnings, and does this relationship differ across public, private nonprofit, and for-profit institutions?*
+*Is there a significant relationship between in-state tuition and median post-graduation earnings, and does this relationship differ across public, private nonprofit, and for-profit institutions?*
 
 ### Phase 1 Summary (Complete)
 
@@ -41,9 +41,9 @@ Statistical inference confirmed a significant Spearman correlation between tuiti
 
 | Section | Status | Owner |
 |---------------------------------------|-----------------|-----------------|
-| 6a. Model 1: Baseline Linear Regression | Scaffold ready | Leonna |
-| 6b. Model 2: Sector Interaction Model | Scaffold ready | Mikaella |
-| 6c. Model 3: To be decided | Scaffold ready | Aaron |
+| 6a. Model 1: Baseline Log-Log Regression | Implemented | Leonna |
+| 6b. Model 2: Sector Interaction Model | Implemented | Mikaella |
+| 6c. Model 3: Institutional-Control Robustness Model | Implemented | Aaron |
 | 7a. Insights | Scaffold ready | Gheann |
 | 7b. Conclusions | Scaffold ready | Precious |
 | Presentation slides (Phase 2 update) | Pending | All members |
@@ -57,45 +57,53 @@ Statistical inference confirmed a significant Spearman correlation between tuiti
 
 The research question has three layers. Each model targets one layer.
 
-| Model | Answers This Part of the Question | Why It's Needed |
-|---|---|---|
 | Model | Answers This Part of the Question | Assigned To |
 |---|---|---|
-| **Model 1: Baseline Regression** | *Do colleges that charge higher tuition produce higher post-graduation earnings?* | Leonna |
-| **Model 2: Sector Interaction** | *Does this relationship differ across public, private nonprofit, and for-profit institutions?* | Mikaella |
-| **Model 3: To Be Decided** | *Does the relationship hold after controlling for other factors?* | Aaron |
+| **Model 1: Baseline Log-Log Regression** | *Is tuition associated with post-graduation earnings across institutions overall?* | Leonna |
+| **Model 2: Sector Interaction** | *Does this association differ across public, private nonprofit, and for-profit institutions?* | Mikaella |
+| **Model 3: Institutional-Control Robustness Model** | *Does the sector-specific association remain after adjusting for enrollment, predominant degree, and state?* | Aaron |
 
 Together, the three models form a complete answer: existence of a relationship, variation across sectors, and robustness to additional controls.
 
-### 1. Decide Model 3 Approach (Aaron)
+### 1. Final Model 3 Approach (Aaron)
 
-Model 1 and Model 2 are regression-based and directly test the research question. Model 3 is open for the group to choose. Aaron will decide on the approach. Some options:
+Model 3 is an extended institution-level regression that preserves the Model 2 tuition-by-sector interaction and adds undergraduate enrollment, predominant degree, and state fixed effects. Guam, Puerto Rico, and the U.S. Virgin Islands are grouped as `US Territory` because Guam and the U.S. Virgin Islands otherwise have only one and two observations. The primary specification is:
 
-| Approach | What It Does | Why It Fits |
-|------------------------|------------------------|------------------------|
-| **Extended regression with covariates** | Add debt, enrollment, locale as controls | Tests if tuition-earnings relationship holds when other factors are accounted for |
-| **K-means clustering** | Cluster institutions by tuition, earnings, debt | Answers: do natural groupings exist beyond sector labels? Maps back to EDA Q3 |
-| **Decision tree / Random Forest** | Predict earnings tier (high/medium/low) from tuition, sector, debt | Non-linear alternative to regression, shows which variables matter most |
-| **Logistic regression** | Predict whether an institution's graduates earn above or below median | Simpler interpretation, works with binned earnings |
+`log_earnings ~ log_tuition * sector + log_enrollment + predominant_degree + state`
 
-Discuss which technique your instructor covered in class and which fits best. Update the notebook header and code scaffold once decided.
+Faber and Slantcheva-Durst (2021, pp. 687–700) provide the closest peer-reviewed precedent. Their study relates College Scorecard earnings to fixed, compositional, and financial institutional characteristics. The open dissertation underlying the article defines institution-level earnings and identifies state, enrollment, and tuition among the explanatory variables before describing OLS estimation (Faber, 2017, pp. 41–45). Muse and Muse (2024, pp. 36–40) provide a second College Scorecard precedent using tuition, institutional type, size, degree offerings, geography, selectivity, and log earnings.
 
-### 2. Confirm Model 1 — Leonna (Baseline Linear Regression)
+Graduate debt is not included in the primary model because debt may transmit part of tuition's relationship with later outcomes. Admission rate is added only in a disclosed sensitivity analysis. Only 1,466 of the 2,894 cleaned institutions report admission rate, including just 55 for-profit institutions. Two regressions are therefore estimated on the same restricted sample, first without admission rate and then with it. Muse and Muse (2024, pp. 35–37) document comparable missingness in institutional selectivity measures.
 
--   Log-transform `TUITIONFEE_IN` and `MD_EARN_WNE_P10` (both right-skewed)
--   Fit simple OLS regression: `log_earnings ~ log_tuition`
--   Report: R-squared, coefficient, p-value, RMSE
--   Diagnostics: residuals-vs-fitted plot, Q-Q plot
+All three models use HC3 heteroskedasticity-consistent standard errors because their residuals reject constant variance. MacKinnon and White (1985, pp. 307–309) derive the jackknife-based HC3 covariance estimator. The models estimate conditional associations and do not identify causal effects.
 
-### 3. Confirm Model 2 — Mikaella (Sector Interaction Model)
+### 2. Model 1 — Leonna (Baseline Log-Log Regression)
 
--   One-hot encode `CONTROL` (Public, Private Nonprofit, For-Profit)
--   Fit regression with interaction: `log_earnings ~ log_tuition * sector`
--   F-test comparing Model 2 vs Model 1
--   Interaction plot showing separate regression lines per sector
--   Report per-sector slopes and significance
+-   Log-transform `TUITIONFEE_IN` and `MD_EARN_WNE_P10`.
+-   Fit `log_earnings ~ log_tuition` with HC3 standard errors.
+-   Report the tuition elasticity, 95% confidence interval, p-value, R-squared, adjusted R-squared, and log RMSE.
+-   Show the fitted relationship, residuals-versus-fitted plot, Q-Q plot, and Breusch-Pagan test.
+-   Interpret the coefficient as an association, consistent with Faber's warning that institution-level correlational analysis does not establish cause and effect (Faber, 2017, pp. 43–46).
 
-### 4. Clarify Insights and Conclusions
+### 3. Model 2 — Mikaella (Sector Interaction Model)
+
+-   Treat public institutions as the reference sector.
+-   Fit `log_earnings ~ log_tuition * sector` with HC3 standard errors.
+-   Use a joint robust Wald test for the two tuition-by-sector interaction terms.
+-   Report the public, private nonprofit, and for-profit tuition elasticities with 95% confidence intervals and p-values.
+-   Plot the three fitted log-log relationships. Muse and Muse (2024, pp. 36, 39) justify distinguishing the same institutional control types in College Scorecard earnings models.
+
+### 4. Method References
+
+Faber, A. (2017). *The impact of college attributes on the earnings of community college graduates* [Doctoral dissertation, University of Toledo]. OhioLINK Electronic Theses and Dissertations Center. http://rave.ohiolink.edu/etdc/view?acc_num=toledo151335572292832
+
+Faber, A., & Slantcheva-Durst, S. (2021). The impact of community college attributes on the earnings of their students. *Community College Journal of Research and Practice, 45*(9), 687–700. https://doi.org/10.1080/10668926.2020.1798302
+
+MacKinnon, J. G., & White, H. (1985). Some heteroskedasticity-consistent covariance matrix estimators with improved finite sample properties. *Journal of Econometrics, 29*(3), 305–325. https://doi.org/10.1016/0304-4076(85)90158-7
+
+Muse, W. B., & Muse, I. (2024). College selectivity, choice of major, and post-college earnings. *Journal of Economic Analysis, 3*(2), 33–51. https://doi.org/10.58567/jea03020003
+
+### 5. Clarify Insights and Conclusions
 
 **Insights (Gheann)** should synthesize:
 - What each model tells us (direction, magnitude, significance)
@@ -109,7 +117,7 @@ Discuss which technique your instructor covered in class and which fits best. Up
 - Limitations of the analysis
 - Suggested future directions
 
-### 5. Slides and Submission
+### 6. Slides and Submission
 
 -   Who will update the Canva slides with Phase 2 content? (All members contribute their sections, one person assembles)
 -   Deadline for individual code completion
