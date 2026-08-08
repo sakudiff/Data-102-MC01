@@ -1,9 +1,11 @@
 archive/
 .pi/tasks
 .venv
+.DS_Store
+*.DS_Store
 data/__MACOSX/
-data/conv_to_md
-data/research
+data/conv_to_md/
+data/research/
 data/college_scorecard/
-docs/literature/dale_krueger_2011_selectivity_earnings.md
-docs/literature/pepinsky_2018_listwise_deletion.md
+docs/literature/*.md
+presentations/
