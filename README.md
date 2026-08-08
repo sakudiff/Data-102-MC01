@@ -8,7 +8,6 @@ The analysis cleans the Scorecard dataset from 6,273 to 2,894 institutions, cons
 
 - **Executed Analysis Notebook:** [`DATA102_Project_Group1.ipynb`](./DATA102_Project_Group1.ipynb)
 - **Compiled Paper (PDF):** [`Paper/main.pdf`](./Paper/main.pdf)
-- **Manuscript Source Files:** [`Paper/`](./Paper/)
 - **Analytical Dataset (CSV):** [`data/final_datasets/College_Scorecard_Subset.csv`](./data/final_datasets/College_Scorecard_Subset.csv)
 
 ## Repository Structure
@@ -16,9 +15,8 @@ The analysis cleans the Scorecard dataset from 6,273 to 2,894 institutions, cons
 ```
 .
 ├── DATA102_Project_Group1.ipynb   Companion analysis notebook with executed outputs
-├── Paper/                         LaTeX source files, figures, bibliography, and compiled main.pdf
+├── Paper/                         Compiled research manuscript PDF (main.pdf)
 ├── data/                          College Scorecard subset and derived analytical datasets
-├── docs/                          Planning documentation and literature review PDFs
 └── specs/                         Machine case project specifications
 ```
 
@@ -44,19 +42,9 @@ To execute the notebook headlessly and update all outputs in-place:
 uv run python -c "import nbformat; from nbconvert.preprocessors import ExecutePreprocessor; nb = nbformat.read('DATA102_Project_Group1.ipynb', as_version=4); ep = ExecutePreprocessor(timeout=600, kernel_name='python3'); ep.preprocess(nb, {'metadata': {'path': './'}}); nbformat.write(nb, open('DATA102_Project_Group1.ipynb', 'w'))"
 ```
 
-## Paper Compilation
+## Research Paper
 
-The manuscript is written in LaTeX under [`Paper/`](./Paper/). To compile the 42-page PDF document with `biber` bibliography:
-
-```bash
-cd Paper
-pdflatex main.tex
-biber main
-pdflatex main.tex
-pdflatex main.tex
-```
-
-[`Paper/main.pdf`](./Paper/main.pdf) is the compiled output, building cleanly with zero LaTeX warnings or citation errors.
+The manuscript was authored, formatted, and compiled using Overleaf. The complete 42-page PDF document is available in [`Paper/main.pdf`](./Paper/main.pdf).
 
 ## Key Empirical Findings
 
@@ -67,7 +55,7 @@ pdflatex main.tex
 
 ## Methodological References
 
-The methodology and citations build on seven core empirical literature sources in [`Paper/references.bib`](./Paper/references.bib):
+The methodology and citations build on seven core empirical literature sources:
 
 - Dale and Krueger (2011)
 - Faber (2017)

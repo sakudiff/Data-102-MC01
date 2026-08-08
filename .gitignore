@@ -9,3 +9,16 @@ data/research/
 data/college_scorecard/
 docs/literature/*.md
 presentations/
+Paper/*.tex
+Paper/*.aux
+Paper/*.bbl
+Paper/*.bcf
+Paper/*.fdb_latexmk
+Paper/*.fls
+Paper/*.log
+Paper/*.out
+Paper/*.run.xml
+Paper/*.synctex.gz
+Paper/*.toc
+Paper/*.bib
+Paper/figures/
