@@ -4,6 +4,13 @@ DATA102 machine case project (Section S30B, Group 1) at De La Salle University. 
 
 The analysis cleans the Scorecard dataset from 6,273 to 2,894 institutions, constructs institutional sector classifications and composite minority-serving indicators, and executes a D'Agostino K-squared normality test, Spearman rank-order correlation analysis, and a nested sequence of three Ordinary Least Squares (OLS) log-log regression models with HC3 jackknife heteroskedasticity-robust standard errors, alongside a selectivity sensitivity analysis on the admission-reporting sub-sample ($N = 1,466$).
 
+## Quick Links
+
+- **Executed Analysis Notebook:** [`DATA102_Project_Group1.ipynb`](./DATA102_Project_Group1.ipynb)
+- **Compiled Paper (PDF):** [`Paper/main.pdf`](./Paper/main.pdf)
+- **Manuscript Source Files:** [`Paper/`](./Paper/)
+- **Analytical Dataset (CSV):** [`data/final_datasets/College_Scorecard_Subset.csv`](./data/final_datasets/College_Scorecard_Subset.csv)
+
 ## Repository Structure
 
 ```
@@ -12,8 +19,7 @@ The analysis cleans the Scorecard dataset from 6,273 to 2,894 institutions, cons
 ├── Paper/                         LaTeX source files, figures, bibliography, and compiled main.pdf
 ├── data/                          College Scorecard subset and derived analytical datasets
 ├── docs/                          Planning documentation and literature review PDFs
-├── specs/                         Machine case project specifications
-└── presentations/                 Slide decks and phase presentation PDFs
+└── specs/                         Machine case project specifications
 ```
 
 ## Setup & Installation
@@ -26,7 +32,7 @@ uv sync
 
 ## Notebook Execution
 
-To launch Jupyter and interact with the companion notebook:
+To launch Jupyter and interact with the companion notebook [`DATA102_Project_Group1.ipynb`](./DATA102_Project_Group1.ipynb):
 
 ```bash
 uv run jupyter notebook DATA102_Project_Group1.ipynb
@@ -40,7 +46,7 @@ uv run python -c "import nbformat; from nbconvert.preprocessors import ExecutePr
 
 ## Paper Compilation
 
-The manuscript is written in LaTeX under `Paper/`. To compile the 42-page PDF document with `biber` bibliography:
+The manuscript is written in LaTeX under [`Paper/`](./Paper/). To compile the 42-page PDF document with `biber` bibliography:
 
 ```bash
 cd Paper
@@ -50,7 +56,7 @@ pdflatex main.tex
 pdflatex main.tex
 ```
 
-`Paper/main.pdf` is the compiled output, building cleanly with zero LaTeX warnings or citation errors.
+[`Paper/main.pdf`](./Paper/main.pdf) is the compiled output, building cleanly with zero LaTeX warnings or citation errors.
 
 ## Key Empirical Findings
 
@@ -61,7 +67,7 @@ pdflatex main.tex
 
 ## Methodological References
 
-The methodology and citations build on seven core empirical literature sources in `Paper/references.bib`:
+The methodology and citations build on seven core empirical literature sources in [`Paper/references.bib`](./Paper/references.bib):
 
 - Dale and Krueger (2011)
 - Faber (2017)
